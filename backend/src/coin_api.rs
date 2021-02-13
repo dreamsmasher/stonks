@@ -1,13 +1,12 @@
-#![feature(try_trait)]
 
 use std::env;
 extern crate reqwest;
-use reqwest::{Response, Error, Url};
+use reqwest::{Response, Error, Url, RequestBuilder};
 use rocket::http::{Status};
 
 pub struct CoinClient {
     client: reqwest::Client,
-    url: Url,
+    url: String,
 }
 
 const TEST_API_KEY: &str = "b54bcf4d-1bca-4e8e-9a24-22ff2c3d462c";
@@ -18,6 +17,7 @@ impl CoinClient {
     pub fn new() -> CoinClient {
         let mut headers = reqwest::header::HeaderMap::new();
         let (key, url) = if cfg!(debug_assertions) {
+                println!("debuggin");
                 (TEST_API_KEY.to_string(), TEST_URL) 
             } else {
                 (env::var("CMC_KEY").unwrap(), PROD_URL)
@@ -32,16 +32,22 @@ impl CoinClient {
                      
         CoinClient {
             client,
-            url: Url::parse(url)
-                     .unwrap()
-                     .join("/v1/cryptocurrency/listings/latest")
-                     .unwrap()
+            url: String::from(url) + "/v1/cryptocurrency"
         }
     }
 
-    pub async fn get(&self, endpoint: &str) -> Option<Response> {
-        let url = self.url.join(endpoint).ok()?;
-        self.client.get(url).send().await.ok()
+    pub async fn get(&self, endpoint: &str) -> Option<String> {
+        let url = self.url.clone() + endpoint;
+        println!("{} {}", self.url, url);
+        self.client.get(&url).send().await.ok()?.text().await.ok()
+    }
+
+    pub async fn get_quotes(&self, args: Vec<(&str, &str)>) -> Option<String> {
+        let endpted = self.url.clone() + "/quotes/historical";
+        let url = Url::parse_with_params(endpted.as_ref(), args.iter()).ok()?;
+        println!("{} {}", endpted, url);
+        self.client.get(url).send().await.ok()?.text().await.ok()
+
     }
 
 }
