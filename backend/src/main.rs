@@ -22,12 +22,12 @@ fn internal_error() -> &'static str {
     "The API is broken, sorry :("
 }
 
-#[get("/coins")]
-async fn coin_handler(coin_client: State<'_, CoinClient>) -> Result<String, Status> {
-    let res: Result<String, Error> = try {
-        coin_client.get().await?.text().await?
+#[get("/coins/<currency>")]
+async fn coin_handler(currency: String, coin_client: State<'_, CoinClient>) -> Result<String, Status> {
+    let res: Option<String> = try {
+        coin_client.get(&currency).await?.text().await.ok()?
     };
-    res.map_err(|_| Status::BadRequest)
+    res.ok_or(Status::BadRequest)
 }
 
 #[rocket::main]
