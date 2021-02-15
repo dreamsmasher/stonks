@@ -1,7 +1,8 @@
 module Main where
 
 import Prelude
-import Components.CentralView
+import Components.Types
+import ApiBindings
 
 import Effect (Effect)
 import Effect.Console (log)

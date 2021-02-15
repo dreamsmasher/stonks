@@ -6,10 +6,13 @@ You can edit this file as you like.
 , dependencies =
   [ "argonaut"
   , "console"
+  , "datetime"
   , "effect"
   , "halogen"
+  , "parsing"
   , "prelude"
   , "psci-support"
+  , "simple-ajax"
   , "strings"
   ]
 , packages = ./packages.dhall

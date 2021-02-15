@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "apexcharts": "^3.24.0"
+    "apexcharts": "^3.24.0",
+    "xhr2": "^0.2.1"
   }
 }
