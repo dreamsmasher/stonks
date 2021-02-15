@@ -20,6 +20,7 @@ import Web.HTML.Location (origin)
 
 dbUrl :: URL
 dbUrl = "http://localhost:8000/coins"
+-- TODO fixme for deployment
 
 fromResp :: Response Json -> Either JsonDecodeError (Object Json)
 fromResp resp = decodeJson (resp.body)
@@ -31,14 +32,7 @@ fetchData = request (defaultRequest
   , responseFormat = json
   }) <#> (either (const $ Left MissingValue) (fromResp >=> (_ .: "data")))
 
-    -- body <- pure (?f x.body)
-    -- pure (unsafeCoerce unit)
-    -- pure $ either (const $ Left MissingValue) (_.body >>> (_ .: "data") >>= decodeJson) x
---   (\resp -> case resp of
---     Left err -> Left err
---     Right res -> res)
-
-test :: Effect Unit
-test = do
-    _ <- runAff (show >>> log) fetchData
-    pure unit
+-- test :: Effect Unit
+-- test = do
+--     _ <- runAff (show >>> log) fetchData
+--     pure unit
