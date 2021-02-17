@@ -46,6 +46,7 @@ export default class App extends React.Component<{}, AppState> {
     render() {
         let {coins, show, display} = this.state;
         let showCoins = coins.filter(c => show.has(c.symbol));
+        console.log(coins);
         return (
             <div className="stonks-container">
                 <h1>//S T O N K S//</h1>
@@ -54,6 +55,15 @@ export default class App extends React.Component<{}, AppState> {
                 </Form.Control>
                 <DropDown key={coins.length} fields={coins.map(c => c.symbol)} onSubmit={::this.onViewChange}/>
                 <CoinGraph coins={showCoins} view={display} />
+                { do {
+                    if (coins.length) {
+                        (<div className="last-updated-stamp">
+                            Last updated: {new Date(coins[0].lastUpdated).toLocaleString()}
+                        </div>)
+                    } else {
+                        null
+                    }
+                }    }
             </div>
         )
     }

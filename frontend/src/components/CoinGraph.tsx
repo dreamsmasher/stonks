@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {CoinQuote, Displays} from '../Types';
+import {CoinQuote, Displays, DisplayUnits} from '../Types';
 import * as RC from 'recharts';
 
 type MetricProps = {
@@ -46,11 +46,16 @@ export const CoinGraph = ({coins, view}: CoinGraphProps) => {
             width={3000}
             height={1000}
             data={quotes}>
+                <RC.CartesianGrid strokeDasharray="3 3"/>
                 <RC.XAxis dataKey="symbol" />
                 <RC.YAxis />
                 <RC.Tooltip />
                 <RC.Legend />
-                <RC.Bar dataKey={view} fill={genColor()} />
+                <RC.Bar unit={DisplayUnits[view]} dataKey={view} >
+                    {quotes.map((_, i) => (
+                        <RC.Cell key={`cell-${i}`} fill={genColor()}/>
+                    ))}
+                </RC.Bar>
             </RC.BarChart>
     )
 }

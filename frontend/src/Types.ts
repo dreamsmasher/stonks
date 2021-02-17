@@ -44,4 +44,15 @@ export enum Displays
 , percentChange1h
 };
 
+export enum DisplayUnits
+{ price = 'USD'
+, maxSupply = ''
+, totalSupply = ''
+, circulatingSupply = ''
+, marketCap = ''
+, percentChange24h = '%'
+, percentChange7d = '%'
+, percentChange1h = '%'
+};
+
 export const DisplaysKeys: string[] = [...Object.keys(Displays)].filter(k => k.length > 1);
