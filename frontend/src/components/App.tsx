@@ -40,14 +40,12 @@ export default class App extends React.Component<{}, AppState> {
     }
 
     onDispChange(ev) {
-        console.log(ev.target.value);
         this.setState({display: ev.target.value});
     }
     
     render() {
         let {coins, show, display} = this.state;
         let showCoins = coins.filter(c => show.has(c.symbol));
-        console.log(showCoins);
         return (
             <div className="stonks-container">
                 <h1>S T O N K S</h1>

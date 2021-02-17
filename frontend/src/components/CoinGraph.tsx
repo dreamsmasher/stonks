@@ -39,7 +39,7 @@ const flattenQuote = (obj: CoinQuote): object => {
 
 }
 export const CoinGraph = ({coins, view}: CoinGraphProps) => {
-    // @ts-ignore because babel is better
+    // @ts-ignore
     let quotes = coins.map((c) => flattenQuote(c) |> {symbol: #.symbol, [view]: #[view]});
     return (
         <RC.BarChart 
