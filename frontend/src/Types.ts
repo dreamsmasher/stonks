@@ -56,3 +56,31 @@ export enum DisplayUnits
 };
 
 export const DisplaysKeys: string[] = [...Object.keys(Displays)].filter(k => k.length > 1);
+
+export interface BTCTimeData {
+  time_period_start: Date,
+  time_period_end: Date,
+  time_open: Date,
+  time_close: Date,
+  price_open: number,
+  price_high: number,
+  price_low: number,
+  price_close: number,
+  volume_traded: number,
+  trades_count: number
+}
+
+export enum BTCDisplays 
+{ time_period_start
+, time_period_end
+, time_open
+, time_close
+, price_open
+, price_high
+, price_low
+, price_close
+, volume_traded
+, trades_count
+} 
+
+export const BTCDisplaysKeys: string[] = [...Object.keys(BTCDisplays)].filter(k => k.length > 1);

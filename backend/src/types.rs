@@ -1,5 +1,6 @@
 use rocket::request::{FromFormValue};
 use serde::{Serialize, Deserialize};
+use std::fmt;
 // use rocket::http::RawStr;
 
 #[derive(FromFormValue, Debug)]
@@ -53,4 +54,28 @@ pub struct Quote {
     percent_change_24h: f64,
     percent_change_7d: f64,
     market_cap: f64
+}
+
+#[derive(Serialize, Deserialize, FromFormValue, Debug)]
+pub enum CoinAPIUnits {
+    SEC,
+    MIN,
+    HRS,
+    DAY,
+    MTH,
+    YRS
+}
+
+impl fmt::Display for CoinAPIUnits {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match *self {
+            CoinAPIUnits::SEC => f.write_str("SEC"),
+            CoinAPIUnits::MIN => f.write_str("MIN"),
+            CoinAPIUnits::HRS => f.write_str("HRS"),
+            CoinAPIUnits::DAY => f.write_str("DAY"),
+            CoinAPIUnits::MTH => f.write_str("MTH"),
+            CoinAPIUnits::YRS => f.write_str("YRS")
+        }
+    }
+
 }

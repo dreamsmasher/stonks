@@ -1,4 +1,4 @@
-use mongodb::{Client, results, error::Error, Collection, options::ClientOptions, bson::{doc, to_document, Bson, from_bson, to_bson, document::Document}};
+use mongodb::{Client, results, error::Error, Collection, options::ClientOptions, bson::{doc, to_document, document::Document}};
 use crate::types::{CoinQuote, Quote, Platform};
 use serde::{Serialize, Deserialize};
 // use bson_rs::Bson;
