@@ -39,8 +39,8 @@ const flattenQuote = (obj: CoinQuote): object => {
 
 }
 export const CoinGraph = ({coins, view}: CoinGraphProps) => {
-    let dsp = Displays[view];
-    let quotes = coins.map((c) => flattenQuote(c) |> {symbol: #.symbol, [dsp]: #[dsp]});
+    // @ts-ignore because babel is better
+    let quotes = coins.map((c) => flattenQuote(c) |> {symbol: #.symbol, [view]: #[view]});
     return (
         <RC.BarChart 
             width={3000}
@@ -50,7 +50,7 @@ export const CoinGraph = ({coins, view}: CoinGraphProps) => {
                 <RC.YAxis />
                 <RC.Tooltip />
                 <RC.Legend />
-                <RC.Bar dataKey={dsp} fill={genColor()} />
+                <RC.Bar dataKey={view} fill={genColor()} />
             </RC.BarChart>
     )
 }
