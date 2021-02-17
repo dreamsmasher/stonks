@@ -4,7 +4,7 @@ import * as axios from 'axios';
 const serverURL = window.location.origin;
 
 export function fetchData(): Promise<CT.CoinQuote[]> {
-    return axios.get(serverURL + '/coins').then(d => d.data.data.map(fromSnakeCase)); // axios data, api data
+    return axios.get(serverURL + '/coins').then(d => d.data.map(fromSnakeCase));
 
 }
 
