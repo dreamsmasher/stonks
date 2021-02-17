@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as API from '../coinApi';
-import {CoinQuote, Displays, DisplayKeys} from '../Types';
+import {CoinQuote, Displays, DisplaysKeys} from '../Types';
 import {CoinGraph} from './CoinGraph';
 import {DropDown} from './Dropdown';
 import Form from 'react-bootstrap/Form';
@@ -48,9 +48,9 @@ export default class App extends React.Component<{}, AppState> {
         let showCoins = coins.filter(c => show.has(c.symbol));
         return (
             <div className="stonks-container">
-                <h1>S T O N K S</h1>
+                <h1>//S T O N K S//</h1>
                 <Form.Control onChange={::this.onDispChange} as="select" name="graphview" id="graph-select">
-                    {DisplayKeys.map((k, i) => (<option key={i} value={k}>{unCamel(k)}</option>))}
+                    {DisplaysKeys.map((k, i) => (<option key={i} value={k}>{unCamel(k)}</option>))}
                 </Form.Control>
                 <DropDown key={coins.length} fields={coins.map(c => c.symbol)} onSubmit={::this.onViewChange}/>
                 <CoinGraph coins={showCoins} view={display} />

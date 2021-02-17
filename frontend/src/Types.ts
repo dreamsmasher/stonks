@@ -34,14 +34,14 @@ export interface Platform
 }
 
 export enum Displays 
-{ maxSupply
+{ price
+, maxSupply
 , totalSupply
 , circulatingSupply
-, price
 , marketCap
 , percentChange24h
 , percentChange7d
 , percentChange1h
 };
 
-export const DisplayKeys: string[] = [...Object.keys(Displays)].filter(k => k.length > 1);
+export const DisplaysKeys: string[] = [...Object.keys(Displays)].filter(k => k.length > 1);

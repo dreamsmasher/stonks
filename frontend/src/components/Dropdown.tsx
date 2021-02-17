@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Form, Dropdown, DropdownButton, Button } from 'react-bootstrap';
 import { CoinSearch } from './CoinSearch';
+import { StatefulButton } from './StatefulButton';
 
 interface DropdownProps {
   fields: string[]
@@ -11,6 +12,7 @@ interface DropDownState {
   vals: object,
   show: Set<string>
 }
+
 export class DropDown extends React.Component<DropdownProps, DropDownState> {
   // @ts-ignore
   constructor(props) {
@@ -41,6 +43,14 @@ export class DropDown extends React.Component<DropdownProps, DropDownState> {
     this.props.onSubmit(selected);
   }
 
+  toggleAll(b) {
+    console.log(b);
+    this.setState(st => {
+      let vals = [...Object.keys(st.vals)].map(k => [k, b]);
+      return {vals: Object.fromEntries(vals)};
+    })
+  }
+
   render() {
     let {vals, show} = this.state;
     let keys = [...Object.keys(vals)].filter(k => show.has(k));
@@ -49,20 +59,26 @@ export class DropDown extends React.Component<DropdownProps, DropDownState> {
       <Dropdown>
         <DropdownButton id="currency-dropdown-toggle" title="Select coins">
           <Form onSubmit={::this.onSubmit}>
-          <CoinSearch values={this.props.fields} onFind={::this.onFind} />
-          { keys.map((k, i) => (
-            <Form.Check
-              inline
-              onChange={::this.onChange}
-              checked={vals[k]}
-              name={k}
-              label={k}
-              type="checkbox"
-              key={k}
-              id={k}
-            />))
-          }
-          <Button type="submit">Submit</Button>
+            <CoinSearch values={this.props.fields} onFind={::this.onFind} />
+            { keys.map((k, i) => (
+              <Form.Check
+                inline
+                onChange={::this.onChange}
+                checked={vals[k]}
+                name={k}
+                label={k}
+                type="checkbox"
+                key={k}
+                id={k}
+              />))
+            }
+            <StatefulButton 
+              on="Select all"
+              off="Unselect all" 
+              initial={false}
+              onClick={::this.toggleAll}
+            />
+            <Button type="submit">Submit</Button>
           </Form >
         </DropdownButton>
       </Dropdown >               
