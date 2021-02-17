@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+        "outDir": "./dist",
+        "module": "es2020",
+        "allowSyntheticDefaultImports": true,
+        "lib": ["esnext", "dom"],
+        "esModuleInterop": true,
+        "moduleResolution": "node",
+        "target": "es5",
+        "removeComments": true,
+        "jsx": "react",
+        "allowJs": true,
+    },
+    "include": [
+        "src/index.tsx"
+    ]
+}

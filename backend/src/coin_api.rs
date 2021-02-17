@@ -3,6 +3,7 @@ use std::env;
 extern crate reqwest;
 use reqwest::{Response, Error, Url, RequestBuilder};
 use rocket::http::{Status};
+use crate::db::{save_coinquote, save_coinquotes};
 
 pub struct CoinClient {
     client: reqwest::Client,
@@ -35,19 +36,20 @@ impl CoinClient {
             url: String::from(url) + "/v1/cryptocurrency"
         }
     }
-
-    pub async fn get(&self, endpoint: &str) -> Option<String> {
-        let url = self.url.clone() + endpoint;
-        println!("{} {}", self.url, url);
-        self.client.get(&url).send().await.ok()?.text().await.ok()
+    fn parse_url(&self, endpoint: &str, args: Option<Vec<(&str, &str)>>) -> Option<Url> {
+        let joined_url = self.url.clone() + endpoint;
+        match args {
+            None => Url::parse(&joined_url).ok(),
+            Some(args) => Url::parse_with_params(&joined_url, args.iter()).ok()
+        }
     }
 
-    pub async fn get_quotes(&self, args: Vec<(&str, &str)>) -> Option<String> {
-        let endpted = self.url.clone() + "/quotes/historical";
-        let url = Url::parse_with_params(endpted.as_ref(), args.iter()).ok()?;
-        println!("{} {}", endpted, url);
+    pub async fn get(&self, endpoint: &str, args: Option<Vec<(&str, &str)>>) -> Option<String> {
+        let url = self.parse_url(endpoint, args)?;
         self.client.get(url).send().await.ok()?.text().await.ok()
-
     }
 
+    pub async fn get_quotes(&self, args: Option<Vec<(&str, &str)>>) -> Option<String> {
+        self.get("/quotes/latest", args).await
+    }
 }
